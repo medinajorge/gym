@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from helper import join_weeks
 
 def Eric_cycle1():
@@ -387,3 +388,16 @@ def Eric_cycle2():
         ], axis=1)
     )
     return join_weeks(locals())
+
+def Eric_cycle1_m2():
+    R_prev = Eric_cycle1()
+    R_prev, notes = R_prev.iloc[:-1], R_prev.iloc[-1]
+    
+    R = R_prev.loc[:, "W3":].astype(np.float64)
+    R.columns =  pd.MultiIndex.from_tuples((f"W{i}", *levels) for i in range(1, 5) for levels in R["W3"].columns)
+    R = R.swaplevel(i=0, j=2, axis=1)
+    R.loc["weight", "W. Pull up (prono)"] = R.loc["weight", "W. Pull up (prono)"].values + 2.5
+    R.loc["weight", "Pause CG BP"] = R.loc["weight", "Pause CG BP"].values - 10
+    R = R.swaplevel(i=0, j=2, axis=1)
+    R.loc["notes"] = notes.loc["W1":"W4"]
+    return R
