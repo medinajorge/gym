@@ -397,7 +397,10 @@ def Eric_cycle1_m2():
     R.columns =  pd.MultiIndex.from_tuples((f"W{i}", *levels) for i in range(1, 5) for levels in R["W3"].columns)
     R = R.swaplevel(i=0, j=2, axis=1)
     R.loc["weight", "W. Pull up (prono)"] = R.loc["weight", "W. Pull up (prono)"].values + 2.5
+    R.loc["weight", "W. ring row"] = R.loc["weight", "W. ring row"].values + 5
+    R.loc["weight", "1-arm cable row"] = R.loc["weight", "1-arm cable row"].values + 5
     R.loc["weight", "Pause CG BP"] = R.loc["weight", "Pause CG BP"].values - 10
+    R.loc["weight", "W. dip"] = R.loc["weight", "W. dip"].values - 5
     R = R.swaplevel(i=0, j=2, axis=1)
     R.loc["notes"] = notes.loc["W1":"W4"]
     return R
